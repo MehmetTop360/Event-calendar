@@ -9,7 +9,13 @@ import { validates } from '@server/utils/validation'
 import { z } from 'zod'
 import { Calendar } from './calendar'
 
-const eventTypeEnum = z.enum(['MEETUP', 'HOUSE_PARTY', 'BIRTHDAY', 'OTHER'])
+const eventTypeEnum = z.enum([
+  'MEETUP',
+  'HOUSE_PARTY',
+  'BIRTHDAY',
+  'WORK',
+  'OTHER',
+])
 
 @Entity()
 export class Event {
@@ -42,8 +48,8 @@ export class Event {
   duration: number
   // Duration in minutes
 
-  @Column('text', { nullable: true })
-  type: string | null
+  @Column('text')
+  type: string
 
   @Column('timestamp with time zone')
   createdAt: Date
@@ -62,7 +68,7 @@ export const eventSchema = validates<EventBare>().with({
   eventDate: z.date(),
   startTime: z.string(),
   duration: z.number().int().nonnegative(),
-  type: eventTypeEnum.nullable(),
+  type: eventTypeEnum,
   createdAt: z.date(),
   updatedAt: z.date().nullable(),
 })

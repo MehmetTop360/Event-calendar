@@ -5,9 +5,3 @@ defineProps<{
   event: EventBare
 }>()
 </script>
-
-<template>
-  <div :class="event" class="rounded p-1 text-xs leading-tight">
-    {{ event.title }}
-  </div>
-</template>
