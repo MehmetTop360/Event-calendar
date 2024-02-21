@@ -2,7 +2,7 @@
 
 <template>
   <div
-    class="max-w-md p-6 mx-3 mb-6 text-center bg-white border border-gray-200 shadow rounded-3xl dark:border-gray-700 dark:bg-gray-800"
+    class="mx-3 mb-6 max-w-md rounded-3xl border border-gray-200 bg-white p-6 text-center shadow dark:border-gray-700 dark:bg-gray-800"
   >
     <slot />
   </div>

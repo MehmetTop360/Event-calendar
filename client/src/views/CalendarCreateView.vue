@@ -13,7 +13,7 @@ const calendarForm = ref({
   permalink: '',
 })
 
-const [createProject, errorMessage] = useErrorMessage(async () => {
+const [createCalendar, errorMessage] = useErrorMessage(async () => {
   await trpc.calendar.create.mutate(calendarForm.value)
 
   router.push({ name: 'Dashboard' })
@@ -22,24 +22,24 @@ const [createProject, errorMessage] = useErrorMessage(async () => {
 
 <template>
   <div class="flex items-center justify-between">
-    <form aria-label="Project" @submit.prevent="createProject">
+    <form aria-label="Calendar" @submit.prevent="createCalendar">
       <div class="space-y-6">
-        <FwbHeading tag="h4">Create a new project</FwbHeading>
+        <FwbHeading tag="h4">Create a new calendar</FwbHeading>
 
         <div class="mt-6">
           <FwbInput
             aria-label="calendar name"
             v-model="calendarForm.name"
-            :minlength="2"
-            label="Project name"
-            placeholder="My project"
+            :minlength="5"
+            label="Calendar name"
+            placeholder="My Calendar"
           />
         </div>
         <div class="mt-6">
           <FwbInput
             aria-label="calendar permalink"
             v-model="calendarForm.permalink"
-            :minlength="2"
+            :minlength="5"
             label="Calendar permalink"
             placeholder="Work"
           />

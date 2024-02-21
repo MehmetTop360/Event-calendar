@@ -6,7 +6,7 @@ import type { EventBare } from '@mono/server/src/shared/entities'
 
 type EventType = 'MEETUP' | 'HOUSE_PARTY' | 'BIRTHDAY' | 'WORK' | 'OTHER'
 
-const route = useRoute()
+const router = useRoute()
 const eventStore = useEventStore()
 const calendarAttributes = ref([
   {
@@ -27,7 +27,7 @@ const masks = {
   weekdays: 'WWW',
   dayPopover: 'WWW, MMM D, YYYY',
 }
-const calendarId = Number(route.params.id)
+const calendarId = Number(router.params.id)
 const eventTypeColors: Record<EventType, string> = {
   MEETUP: 'red',
   HOUSE_PARTY: 'green',

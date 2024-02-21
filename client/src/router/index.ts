@@ -27,6 +27,14 @@ const router = createRouter({
           name: 'Calendar',
           component: () => import('../views/CalendarView.vue'),
           props: true,
+          children: [
+            {
+              path: 'event/create',
+              name: 'EventCreate',
+              component: () => import('../views/EventCreateView.vue'),
+              props: true,
+            },
+          ],
         },
       ],
     },
@@ -48,6 +56,20 @@ const router = createRouter({
           path: '',
           name: 'Home',
           component: HomeView,
+        },
+        {
+          path: 'calendar/:id',
+          name: 'Calendar',
+          component: () => import('../views/CalendarView.vue'),
+          props: true,
+          children: [
+            {
+              path: 'event/create',
+              name: 'EventCreate',
+              component: () => import('../views/EventCreateView.vue'),
+              props: true,
+            },
+          ],
         },
       ],
     },
