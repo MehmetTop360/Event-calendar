@@ -21,14 +21,14 @@ defineProps<{
     </h5>
     <!-- prettier-ignore -->
     <FwbButton
-      component="RouterLink"
-      tag="router-link"
-      data-testid="viewCalendarEvents"
-      :href="{ name: 'Calendar', params: { id: calendar.id } } as any"
-      class="mt-2 sm:mt-0 sm:pr-3"
-    >
-      View calendar events
-      <ArrowRightIcon aria-hidden="true" class="inline w-4 h-4 ml-1" />
-    </FwbButton>
+    component="RouterLink"
+    tag="router-link"
+    data-testid="viewCalendarEvents"
+    :href="{ name: 'Calendar', params: { id: calendar.id } } as any"
+    class="mt-2 sm:mt-0 sm:pr-3"
+  >
+    View calendar events
+    <ArrowRightIcon aria-hidden="true" class="inline w-4 h-4 ml-1" />
+  </FwbButton>
   </Card>
 </template>

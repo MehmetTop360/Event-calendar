@@ -5,6 +5,7 @@ import { useRouter } from 'vue-router'
 import { FwbHeading, FwbButton, FwbInput } from 'flowbite-vue'
 import useErrorMessage from '@/composables/useErrorMessage'
 import AlertError from '@/components/AlertError.vue'
+import type { EventType } from '@mono/server/src/shared/entities'
 
 const router = useRouter()
 const calendarId = Number(router.currentRoute.value.params.id)
@@ -21,22 +22,21 @@ const eventForm = ref({
 const [createEvent, errorMessage] = useErrorMessage(async () => {
   await trpc.event.create.mutate({
     ...eventForm.value,
-    type: eventForm.value.type as 'MEETUP' | 'HOUSE_PARTY' | 'BIRTHDAY' | 'WORK' | 'OTHER',
+    type: eventForm.value.type as EventType,
   })
 
-  router.push({ name: 'CalendarView' })
+  router.back()
 })
 </script>
 
 <template>
-  <div class="flex items-center justify-between">
-    <form aria-label="Event" @submit.prevent="createEvent">
-      <div class="space-y-6">
-        <FwbHeading tag="h4">Create a new Event</FwbHeading>
-
+  <div class="EventCreateView px-4 py-10">
+    <div class="mx-auto max-w-md">
+      <FwbHeading tag="h4">Create a new Event</FwbHeading>
+      <form aria-label="Event" @submit.prevent="createEvent" class="space-y-6">
         <div class="mt-6">
           <FwbInput
-            aria-label="Event Title"
+            label="Event Title"
             placeholder="Enter event title"
             v-model="eventForm.title"
             :minlength="5"
@@ -93,10 +93,17 @@ const [createEvent, errorMessage] = useErrorMessage(async () => {
 
         <AlertError :message="errorMessage" />
 
-        <div class="flex items-center justify-end">
-          <FwbButton type="submit">Create Event</FwbButton>
+        <div class="mt-6 grid grid-cols-2 items-center gap-3">
+          <FwbButton
+            class="text-center text-sm font-semibold leading-6 text-indigo-600 hover:text-indigo-500"
+            @click="router.back()"
+            >Cancel</FwbButton
+          >
+          <div class="flex items-center justify-end">
+            <FwbButton type="submit" class="w-full sm:w-auto">Create Event</FwbButton>
+          </div>
         </div>
-      </div>
-    </form>
+      </form>
+    </div>
   </div>
 </template>

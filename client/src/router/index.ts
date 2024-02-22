@@ -8,33 +8,25 @@ const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
     {
-      path: '/dashboard',
-      component: DashboardLayout,
-      beforeEnter: [authenticate],
+      path: '/',
+      component: HomeLayout,
       children: [
         {
           path: '',
-          name: 'Dashboard',
-          component: () => import('../views/DashboardView.vue'),
-        },
-        {
-          path: 'calendar/create',
-          name: 'CalendarCreate',
-          component: () => import('../views/CalendarCreateView.vue'),
+          name: 'Home',
+          component: HomeView,
         },
         {
           path: 'calendar/:id',
-          name: 'Calendar',
+          name: 'PublicCalendar',
           component: () => import('../views/CalendarView.vue'),
           props: true,
-          children: [
-            {
-              path: 'event/create',
-              name: 'EventCreate',
-              component: () => import('../views/EventCreateView.vue'),
-              props: true,
-            },
-          ],
+        },
+        {
+          path: 'calendar/:id/event/create',
+          name: 'PublicEventCreate',
+          component: () => import('../views/EventCreateView.vue'),
+          props: true,
         },
       ],
     },
@@ -49,13 +41,19 @@ const router = createRouter({
       component: () => import('../views/SignupView.vue'),
     },
     {
-      path: '',
-      component: HomeLayout,
+      path: '/dashboard',
+      component: DashboardLayout,
+      beforeEnter: [authenticate],
       children: [
         {
           path: '',
-          name: 'Home',
-          component: HomeView,
+          name: 'Dashboard',
+          component: () => import('../views/DashboardView.vue'),
+        },
+        {
+          path: 'calendar/create',
+          name: 'CalendarCreate',
+          component: () => import('../views/CalendarCreateView.vue'),
         },
         {
           path: 'calendar/:id',

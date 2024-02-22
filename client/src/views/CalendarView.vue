@@ -1,10 +1,9 @@
 <script lang="ts" setup>
-import { ref, onMounted } from 'vue'
+import { ref, onMounted, computed } from 'vue'
 import { useEventStore } from '@/stores/event'
 import { useRoute } from 'vue-router'
-import type { EventBare } from '@mono/server/src/shared/entities'
-
-type EventType = 'MEETUP' | 'HOUSE_PARTY' | 'BIRTHDAY' | 'WORK' | 'OTHER'
+import type { EventType, EventBare } from '@mono/server/src/shared/entities'
+import { FwbButton } from 'flowbite-vue'
 
 const router = useRoute()
 const eventStore = useEventStore()
@@ -68,14 +67,22 @@ onMounted(async () => {
     })
   })
 })
+const eventCreateUrl = computed(() => `/calendar/${router.params.id}/event/create`)
+
+function copyPublicUrl() {
+  const url = `${window.location.origin}/calendar/${router.params.id}`
+  navigator.clipboard.writeText(url).then(() => {
+    alert('Public URL copied to clipboard!')
+  })
+}
 </script>
 
 <template>
-  <div class="CalendarView">
+  <div class="CalendarView pt-10">
     <div class="mx-auto max-w-6xl px-4">
-      <div class="grid grid-cols-1 gap-4 lg:grid-cols-3">
-        <div class="lg:col-span-2">
-          <h1 class="mb-4 text-center text-3xl font-semibold">Calendar</h1>
+      <h1 class="mb-4 text-center text-3xl font-semibold">Calendar</h1>
+      <div class="grid grid-cols-1 gap-4 lg:grid-cols-3 lg:gap-8">
+        <div class="order-2 lg:order-1 lg:col-span-2">
           <VCalendar :attributes="calendarAttributes" :masks="masks" disable-page-swipe expanded>
             <template v-slot:day-popover="{ day, attributes }">
               <div class="px-2">
@@ -95,7 +102,7 @@ onMounted(async () => {
             </template>
           </VCalendar>
         </div>
-        <div class="w-58 text-center lg:col-span-1">
+        <div class="order-1 mb-4 lg:order-2 lg:col-span-1">
           <h2 class="mb-4 text-center text-2xl font-semibold lg:text-left">Upcoming Events</h2>
           <div
             v-for="event in futureEvents.slice(0, 3)"
@@ -115,6 +122,16 @@ onMounted(async () => {
             </p>
             <p class="text-sm">Duration: {{ event.duration }} minutes</p>
             <p class="text-sm">Type: {{ event.type }}</p>
+          </div>
+        </div>
+        <div class="order-3 col-span-1 lg:col-span-3">
+          <div
+            class="mt-4 flex flex-col items-center gap-4 text-center lg:col-span-3 lg:w-full lg:flex-row lg:justify-center"
+          >
+            <FwbButton @click="copyPublicUrl" class="w-full lg:w-auto">Copy Public URL</FwbButton>
+            <FwbButton :href="eventCreateUrl" tag="router-link" class="w-full lg:w-auto"
+              >Add Event</FwbButton
+            >
           </div>
         </div>
       </div>
