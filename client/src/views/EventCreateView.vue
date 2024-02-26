@@ -32,14 +32,15 @@ const [createEvent, errorMessage] = useErrorMessage(async () => {
 <template>
   <div class="EventCreateView px-4 py-10">
     <div class="mx-auto max-w-md">
-      <FwbHeading tag="h4">Create a new Event</FwbHeading>
-      <form aria-label="Event" @submit.prevent="createEvent" class="space-y-6">
+      <form @submit.prevent="createEvent" class="space-y-6">
+        <FwbHeading tag="h4">Create a new Event</FwbHeading>
         <div class="mt-6">
           <FwbInput
             label="Event Title"
             placeholder="Enter event title"
             v-model="eventForm.title"
             :minlength="5"
+            required
           />
         </div>
 
@@ -49,6 +50,7 @@ const [createEvent, errorMessage] = useErrorMessage(async () => {
             placeholder="Enter event description"
             v-model="eventForm.description"
             :minlength="10"
+            required
           />
         </div>
 
@@ -60,7 +62,7 @@ const [createEvent, errorMessage] = useErrorMessage(async () => {
             <template #default="{ inputValue, togglePopover }">
               <button
                 class="mt-1 block w-full rounded-md border-gray-300 shadow-sm"
-                @click="togglePopover"
+                @click.stop.prevent="togglePopover"
               >
                 {{ inputValue || 'Select date' }}
               </button>
@@ -74,6 +76,7 @@ const [createEvent, errorMessage] = useErrorMessage(async () => {
           min="0"
           :modelValue="eventForm.duration.toString()"
           @update:modelValue="(val) => (eventForm.duration = Number(val))"
+          required
         />
 
         <div>
@@ -82,6 +85,7 @@ const [createEvent, errorMessage] = useErrorMessage(async () => {
             id="type"
             v-model="eventForm.type"
             class="mt-1 block w-full rounded-md border-gray-300 shadow-sm"
+            required
           >
             <option value="MEETUP">Meetup</option>
             <option value="HOUSE_PARTY">House Party</option>
@@ -93,15 +97,11 @@ const [createEvent, errorMessage] = useErrorMessage(async () => {
 
         <AlertError :message="errorMessage" />
 
-        <div class="mt-6 grid grid-cols-2 items-center gap-3">
-          <FwbButton
-            class="text-center text-sm font-semibold leading-6 text-indigo-600 hover:text-indigo-500"
-            @click="router.back()"
-            >Cancel</FwbButton
-          >
-          <div class="flex items-center justify-end">
-            <FwbButton type="submit" class="w-full sm:w-auto">Create Event</FwbButton>
-          </div>
+        <div
+          class="mt-6 flex items-center justify-between space-x-3 text-center text-sm font-semibold"
+        >
+          <FwbButton class="w-full" variant="light" @click="router.back()"> Cancel </FwbButton>
+          <FwbButton type="submit" class="w-full"> Create Event </FwbButton>
         </div>
       </form>
     </div>

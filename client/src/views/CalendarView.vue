@@ -4,6 +4,7 @@ import { useEventStore } from '@/stores/event'
 import { useRoute } from 'vue-router'
 import type { EventType, EventBare } from '@mono/server/src/shared/entities'
 import { FwbButton } from 'flowbite-vue'
+import { trpc } from '@/trpc'
 
 const router = useRoute()
 const eventStore = useEventStore()
@@ -75,6 +76,19 @@ function copyPublicUrl() {
     alert('Public URL copied to clipboard!')
   })
 }
+
+const deleteErrorMessage = ref('')
+
+async function deleteEvent(eventId: number) {
+  try {
+    await trpc.event.remove.mutate({ id: eventId })
+    futureEvents.value = futureEvents.value.filter((event) => event.id !== eventId)
+  } catch (error) {
+    if (error instanceof Error) {
+      deleteErrorMessage.value = error.message
+    }
+  }
+}
 </script>
 
 <template>
@@ -102,18 +116,30 @@ function copyPublicUrl() {
             </template>
           </VCalendar>
         </div>
-        <div class="order-1 mb-4 lg:order-2 lg:col-span-1">
-          <h2 class="mb-4 text-center text-2xl font-semibold lg:text-left">Upcoming Events</h2>
+        <div class="order-1 mb-4 text-center lg:order-2 lg:col-span-1">
+          <h2 class="mb-4 text-center text-2xl font-semibold">Upcoming Events</h2>
           <div
             v-for="event in futureEvents.slice(0, 3)"
             :key="event.id"
-            class="mb-4 rounded-lg bg-white p-4 text-left shadow"
+            class="relative mb-4 rounded-lg bg-white p-4 text-left shadow"
             :style="{
               borderColor: getColor(event.type as EventType),
               borderWidth: '1px',
               borderStyle: 'solid',
             }"
           >
+            <div
+              v-if="deleteErrorMessage"
+              class="absolute right-10 top-1 rounded bg-red-100 p-2 text-xs text-red-600"
+            >
+              {{ deleteErrorMessage }}
+            </div>
+            <img
+              src="@/assets/trash.png"
+              class="absolute right-2 top-2 h-6 w-6 cursor-pointer"
+              @click="deleteEvent(event.id)"
+              alt="Delete"
+            />
             <h3 class="text-xl">{{ event.title }}</h3>
             <p class="text-sm text-gray-600">{{ event.description }}</p>
             <p class="text-sm">Date: {{ new Date(event.eventDate).toLocaleDateString() }}</p>

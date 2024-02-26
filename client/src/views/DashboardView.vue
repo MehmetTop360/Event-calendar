@@ -10,6 +10,15 @@ const calendars = ref<CalendarBare[]>([])
 onBeforeMount(async () => {
   calendars.value = await trpc.calendar.list.query()
 })
+
+const handleDeleteCalendar = async (calendarId: number) => {
+  try {
+    await trpc.calendar.remove.mutate({ id: calendarId })
+    calendars.value = calendars.value.filter((calendar) => calendar.id !== calendarId)
+  } catch (error) {
+    console.error('Error deleting calendar:', error)
+  }
+}
 </script>
 
 <template>
@@ -20,7 +29,7 @@ onBeforeMount(async () => {
       class="grid grid-cols-1 gap-4 px-4 sm:grid-cols-2 lg:grid-cols-3"
     >
       <div v-for="calendar in calendars" :key="calendar.id" class="col-span-1">
-        <Calendar :calendar="calendar" />
+        <Calendar :calendar="calendar" @deleteCalendar="handleDeleteCalendar" />
       </div>
     </div>
     <FwbAlert v-else data-testid="calendarListEmpty">No calendars yet!</FwbAlert>

@@ -30,7 +30,8 @@ const [createCalendar, errorMessage] = useErrorMessage(async () => {
           <FwbInput
             aria-label="calendar name"
             v-model="calendarForm.name"
-            :minlength="5"
+            :minlength="4"
+            :maxlength="8"
             label="Calendar name"
             placeholder="My Calendar"
           />
@@ -40,6 +41,7 @@ const [createCalendar, errorMessage] = useErrorMessage(async () => {
             aria-label="calendar permalink"
             v-model="calendarForm.permalink"
             :minlength="5"
+            :maxlength="20"
             label="Calendar permalink"
             placeholder="Work"
           />
