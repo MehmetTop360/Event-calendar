@@ -17,13 +17,13 @@ const router = createRouter({
           component: HomeView,
         },
         {
-          path: 'calendar/:id',
+          path: 'calendar/:permalink',
           name: 'PublicCalendar',
           component: () => import('../views/CalendarView.vue'),
           props: true,
         },
         {
-          path: 'calendar/:id/event/create',
+          path: 'calendar/:permalink/event/create',
           name: 'PublicEventCreate',
           component: () => import('../views/EventCreateView.vue'),
           props: true,
@@ -56,7 +56,7 @@ const router = createRouter({
           component: () => import('../views/CalendarCreateView.vue'),
         },
         {
-          path: 'calendar/:id',
+          path: 'calendar/:permalink',
           name: 'Calendar',
           component: () => import('../views/CalendarView.vue'),
           props: true,

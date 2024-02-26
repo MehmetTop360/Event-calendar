@@ -5,9 +5,12 @@ import { useRoute } from 'vue-router'
 import type { EventType, EventBare } from '@mono/server/src/shared/entities'
 import { FwbButton } from 'flowbite-vue'
 import { trpc } from '@/trpc'
+import { useCalendarStore } from '@/stores/calendar'
 
 const router = useRoute()
 const eventStore = useEventStore()
+const calendarStore = useCalendarStore()
+const loadErrorMessage = ref('')
 const calendarAttributes = ref([
   {
     key: 'today',
@@ -27,7 +30,7 @@ const masks = {
   weekdays: 'WWW',
   dayPopover: 'WWW, MMM D, YYYY',
 }
-const calendarId = Number(router.params.id)
+
 const eventTypeColors: Record<EventType, string> = {
   MEETUP: 'red',
   HOUSE_PARTY: 'green',
@@ -41,6 +44,14 @@ const getColor = (type: EventType) => {
 }
 
 onMounted(async () => {
+  const permalink = router.params.permalink
+  if (typeof permalink !== 'string') {
+    loadErrorMessage.value = 'Invalid calendar link.'
+    return
+  }
+
+  const calendar = await calendarStore.getCalendarByPermalink(permalink)
+  const calendarId = calendar.id
   const today = new Date()
   await eventStore.fetchEvents(calendarId)
 
@@ -68,10 +79,15 @@ onMounted(async () => {
     })
   })
 })
-const eventCreateUrl = computed(() => `/calendar/${router.params.id}/event/create`)
+
+const eventCreateUrl = computed(() => {
+  const permalink = router.params.permalink
+  return permalink ? `/calendar/${permalink}/event/create` : '#'
+})
 
 function copyPublicUrl() {
-  const url = `${window.location.origin}/calendar/${router.params.id}`
+  const permalink = router.params.permalink
+  const url = `${window.location.origin}/calendar/${permalink}`
   navigator.clipboard.writeText(url).then(() => {
     alert('Public URL copied to clipboard!')
   })
@@ -95,6 +111,9 @@ async function deleteEvent(eventId: number) {
   <div class="CalendarView pt-10">
     <div class="mx-auto max-w-6xl px-4">
       <h1 class="mb-4 text-center text-3xl font-semibold">Calendar</h1>
+      <div v-if="loadErrorMessage" class="alert alert-danger">
+        {{ loadErrorMessage }}
+      </div>
       <div class="grid grid-cols-1 gap-4 lg:grid-cols-3 lg:gap-8">
         <div class="order-2 lg:order-1 lg:col-span-2">
           <VCalendar :attributes="calendarAttributes" :masks="masks" disable-page-swipe expanded>

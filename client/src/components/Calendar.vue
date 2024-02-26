@@ -24,11 +24,11 @@ const handleDelete = () => {
     data-testid="calendar"
   >
     <h5
-      class="text-xl font-bold tracking-tight text-center text-gray-900 dark:text-white sm:text-2xl"
+      class="text-center text-xl font-bold tracking-tight text-gray-900 dark:text-white sm:text-2xl"
     >
       {{ calendar.name }}
     </h5>
-    <div class="flex justify-center w-full gap-2 sm:w-auto">
+    <div class="flex w-full justify-center gap-2 sm:w-auto">
       <FwbButton
         @click="handleDelete"
         class="w-full px-4 py-2 text-xs sm:w-auto sm:px-4 sm:py-2 sm:text-sm"
@@ -40,7 +40,7 @@ const handleDelete = () => {
         tag="router-link"
         data-testid="viewCalendarEvents"
         class="w-full px-4 py-2 text-xs sm:w-auto sm:px-4 sm:py-2 sm:text-sm"
-        :href="{ name: 'Calendar', params: { id: calendar.id } } as any"
+        :href="{ name: 'Calendar', params: { permalink: calendar.permalink } } as any"
       >
         View calendar
       </FwbButton>

@@ -18,9 +18,16 @@ export const useCalendarStore = defineStore('calendar', () => {
     return calendar
   }
 
+  const getCalendarByPermalink = async (permalink: string) => {
+    const calendar = await trpc.calendar.view.query({ permalink })
+    console.log('Getting calendar by permalink:', permalink, 'Result:', calendar)
+    return calendar
+  }
+
   return {
     calendars,
     fetchCalendars,
     getCalendarById,
+    getCalendarByPermalink,
   }
 })

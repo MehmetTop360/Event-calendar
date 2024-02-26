@@ -1,14 +1,29 @@
 <script setup lang="ts">
 import { trpc } from '@/trpc'
-import { ref } from 'vue'
+import { ref, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
 import { FwbHeading, FwbButton, FwbInput } from 'flowbite-vue'
 import useErrorMessage from '@/composables/useErrorMessage'
 import AlertError from '@/components/AlertError.vue'
 import type { EventType } from '@mono/server/src/shared/entities'
+import { useCalendarStore } from '@/stores/calendar'
 
 const router = useRouter()
-const calendarId = Number(router.currentRoute.value.params.id)
+const calendarStore = useCalendarStore()
+let calendarId: number | null = null
+
+onMounted(async () => {
+  const permalink = router.currentRoute.value.params.permalink
+
+  if (typeof permalink !== 'string') {
+    console.error('Permalink is undefined or not a string:', permalink)
+    return
+  }
+
+  const calendar = await calendarStore.getCalendarByPermalink(permalink)
+  calendarId = calendar.id
+})
+
 const eventForm = ref({
   title: '',
   description: '',
@@ -20,13 +35,35 @@ const eventForm = ref({
 })
 
 const [createEvent, errorMessage] = useErrorMessage(async () => {
-  await trpc.event.create.mutate({
-    ...eventForm.value,
-    type: eventForm.value.type as EventType,
-  })
+  if (calendarId === null) {
+    errorMessage.value = 'Calendar ID is null'
+    return
+  }
 
-  router.back()
+  const startTime =
+    eventForm.value.eventDate instanceof Date
+      ? formatDateToTime(eventForm.value.eventDate)
+      : eventForm.value.startTime
+
+  try {
+    await trpc.event.create.mutate({
+      ...eventForm.value,
+      startTime,
+      type: eventForm.value.type as EventType,
+      calendarId: calendarId,
+    })
+
+    router.back()
+  } catch (error) {
+    if (error instanceof Error) {
+      errorMessage.value = error.message
+    }
+  }
 })
+
+function formatDateToTime(date: Date) {
+  return date.toTimeString().split(' ')[0]
+}
 </script>
 
 <template>
