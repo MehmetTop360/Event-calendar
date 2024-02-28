@@ -50,7 +50,7 @@ const schema = z
 const config = schema.parse({
   env: env.NODE_ENV,
   port: env.PORT,
-  isCi: env.CI,
+  isCi: env.CI === 'true',
 
   auth: {
     tokenKey: env.TOKEN_KEY,
