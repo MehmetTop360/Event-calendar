@@ -65,6 +65,7 @@ onMounted(async () => {
       key: event.id.toString(),
       dates: [new Date(event.eventDate)],
       // Dot type error is due to mismatch between the TypeScript type definitions and the actual JavaScript implementation of VCalendar
+      // @ts-ignore dot type error
       dot: { color },
       popover: {
         label: `${event.title} at ${event.startTime.substring(0, 5)}`,
