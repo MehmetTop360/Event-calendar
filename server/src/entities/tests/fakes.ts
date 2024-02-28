@@ -1,6 +1,6 @@
 import { v4 as uuidv4 } from 'uuid'
 import type { Calendar } from '@server/entities/calendar'
-import type { Event } from '@server/entities/event'
+import { EventType, type Event } from '@server/entities/event'
 import type { User } from '@server/entities/user'
 import { random } from '@tests/utils/random'
 
@@ -35,7 +35,7 @@ export const fakeEvent = <T extends Partial<Event>>(
   eventDate: new Date(),
   startTime: '10:00:00',
   duration: 60,
-  type: 'MEETUP' as const,
+  type: EventType.MEETUP,
   createdAt: new Date(),
   ...overrides,
 })
