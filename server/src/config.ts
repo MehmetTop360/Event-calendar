@@ -68,6 +68,7 @@ const config = schema.parse({
     password: env.DB_PASSWORD,
     logging: env.DB_LOGGING,
     synchronize: env.DB_SYNC,
+    ssl: env.DB_SSL,
   },
 })
 
