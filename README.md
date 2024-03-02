@@ -1,36 +1,31 @@
-## Setup
+# Event Calendar with TRPC
 
-1. `npm install`
-2. Create a PostgreSQL database, or use an existing one from the previous exercises.
-3. Setup `.env` files in `client` and `server` based on `.env.example` files.
+This project's idea has been taken from https://github.com/joereynolds/what-to-code. The idea is changed to fit the sprint projects requirements more.
 
-## Tests
-
-```bash
-# front end unit and E2E tests
-npm test -w client
-
-# front end unit tests
-npm run test:unit -w client
-
-# front end E2E tests
-npm run test:e2e -w client
-
-# back end tests with an in-memory database
-npm test -w server
-
-# back end tests with a development database
-npm run test:db -w server
+```
+An online calendar that doesn't require login or auth. You create a calendar and get a permalink. Anyone with that permalink is free to add events etc...
 ```
 
-## Running the server
+This project is an online calendar application that allows users to create calendars, add, view, and remove events, and share these calendars with others via a permalink. The visitors can also add and view events to calendars. This application aims to provide an intuitive and user-friendly interface for calendar management and sharing.
 
-In development mode:
+## User stories
 
-```bash
-# automatically restarts the server
-npm run dev
+As a User, I can:
 
-# server can be started without a database
-npm run dev:mem
-```
+- Sign up and log in to create a personalized account.
+- Create calendars to organize my events.
+- Add events to any calendar, including details such as title, description, start and end times, and event type.
+- Delete events in calendars I own to manage my schedule.
+- View my calendars with all events in a calendar format.
+- Share calendars using a unique permalink.
+- View real-time updates on my calendars.
+
+As a Visitor (without signing up), I can:
+
+- View calendars using a permalink shared with me.
+- View events on any calendar.
+- Create events in any calendar.
+
+## Links
+
+<a target="_blank" href="https://icons8.com/icon/nkGDoqzPxYM3/calendar">Calendar</a> icon by <a target="_blank" href="https://icons8.com">Icons8</a>
