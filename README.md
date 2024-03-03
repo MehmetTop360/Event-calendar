@@ -17,7 +17,7 @@ As a User, I can:
 - Add events to any calendar, including details such as title, description, start and end times, and event type.
 - Delete events in calendars I own to manage my schedule.
 - View my calendars with all events in a calendar format.
-- Share calendars using a unique permalink.
+- Share calendars with a unique permalink.
 - View real-time updates on my calendars.
 
 As a Visitor (without signing up), I can:
