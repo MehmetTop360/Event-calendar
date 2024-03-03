@@ -12,7 +12,7 @@ This project is an online calendar application that allows users to create calen
 
 As a User, I can:
 
-- Sign up and log in to create a personalized account.
+- Sign up and log in to create a personal account.
 - Create calendars to organize my events.
 - Add events to any calendar, including details such as title, description, start and end times, and event type.
 - Delete events in calendars I own to manage my schedule.
