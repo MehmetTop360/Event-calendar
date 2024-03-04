@@ -77,6 +77,7 @@ function formatDateToTime(date: Date) {
             placeholder="Enter event title"
             v-model="eventForm.title"
             :minlength="5"
+            :maxlength="15"
             required
           />
         </div>
@@ -87,6 +88,7 @@ function formatDateToTime(date: Date) {
             placeholder="Enter event description"
             v-model="eventForm.description"
             :minlength="10"
+            :maxlength="100"
             required
           />
         </div>

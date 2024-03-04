@@ -98,8 +98,10 @@ const deleteErrorMessage = ref('')
 
 async function deleteEvent(eventId: number) {
   try {
-    await trpc.event.remove.mutate({ id: eventId })
-    futureEvents.value = futureEvents.value.filter((event) => event.id !== eventId)
+    if (confirm('Are you sure you want to delete this event?')) {
+      await trpc.event.remove.mutate({ id: eventId })
+      futureEvents.value = futureEvents.value.filter((event) => event.id !== eventId)
+    }
   } catch (error) {
     if (error instanceof Error) {
       deleteErrorMessage.value = error.message

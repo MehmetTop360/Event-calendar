@@ -1,73 +1,48 @@
 import { createRouter, createWebHistory } from 'vue-router'
-import HomeView from '../views/HomeView.vue'
-import DashboardLayout from '@/layouts/DashboardLayout.vue'
 import { authenticate } from './guards'
-import HomeLayout from '@/layouts/HomeLayout.vue'
+import MainLayout from '@/layouts/MainLayout.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
     {
       path: '/',
-      component: HomeLayout,
+      redirect: '/login',
+      component: MainLayout,
       children: [
         {
-          path: '',
-          name: 'Home',
-          component: HomeView,
+          path: 'login',
+          name: 'Login',
+          component: () => import('../views/LoginView.vue'),
         },
         {
-          path: 'calendar/:permalink',
-          name: 'PublicCalendar',
-          component: () => import('../views/CalendarView.vue'),
-          props: true,
-        },
-        {
-          path: 'calendar/:permalink/event/create',
-          name: 'PublicEventCreate',
-          component: () => import('../views/EventCreateView.vue'),
-          props: true,
-        },
-      ],
-    },
-    {
-      path: '/login',
-      name: 'Login',
-      component: () => import('../views/LoginView.vue'),
-    },
-    {
-      path: '/signup',
-      name: 'Signup',
-      component: () => import('../views/SignupView.vue'),
-    },
-    {
-      path: '/dashboard',
-      component: DashboardLayout,
-      beforeEnter: [authenticate],
-      children: [
-        {
-          path: '',
-          name: 'Dashboard',
-          component: () => import('../views/DashboardView.vue'),
-        },
-        {
-          path: 'calendar/create',
-          name: 'CalendarCreate',
-          component: () => import('../views/CalendarCreateView.vue'),
+          path: 'signup',
+          name: 'Signup',
+          component: () => import('../views/SignupView.vue'),
         },
         {
           path: 'calendar/:permalink',
           name: 'Calendar',
           component: () => import('../views/CalendarView.vue'),
           props: true,
-          children: [
-            {
-              path: 'event/create',
-              name: 'EventCreate',
-              component: () => import('../views/EventCreateView.vue'),
-              props: true,
-            },
-          ],
+        },
+        {
+          path: 'calendar/:permalink/event/create',
+          name: 'EventCreate',
+          component: () => import('../views/EventCreateView.vue'),
+          props: true,
+        },
+        {
+          path: 'dashboard',
+          name: 'Dashboard',
+          beforeEnter: [authenticate],
+          component: () => import('../views/DashboardView.vue'),
+        },
+        {
+          path: 'calendar/create',
+          name: 'CalendarCreate',
+          beforeEnter: [authenticate],
+          component: () => import('../views/CalendarCreateView.vue'),
         },
       ],
     },

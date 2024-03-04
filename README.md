@@ -8,6 +8,10 @@ An online calendar that doesn't require login or auth. You create a calendar and
 
 This project is an online calendar application that allows users to create calendars, add, view, and remove events, and share these calendars with others via a permalink. The visitors can also add and view events to calendars. This application aims to provide an intuitive and user-friendly interface for calendar management and sharing.
 
+## Live link
+
+https://event-calendar.11mi7jif6hhlq.eu-central-1.cs.amazonlightsail.com/
+
 ## User stories
 
 As a User, I can:
