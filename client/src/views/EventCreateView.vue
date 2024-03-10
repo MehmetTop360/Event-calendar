@@ -76,6 +76,7 @@ function formatDateToTime(date: Date) {
             label="Event Title"
             placeholder="Enter event title"
             v-model="eventForm.title"
+            data-testid="event-title"
             :minlength="5"
             :maxlength="15"
             required
@@ -86,6 +87,7 @@ function formatDateToTime(date: Date) {
           <FwbInput
             label="Event Description"
             placeholder="Enter event description"
+            data-testid="event-description"
             v-model="eventForm.description"
             :minlength="10"
             :maxlength="100"
@@ -100,6 +102,8 @@ function formatDateToTime(date: Date) {
           <VDatePicker v-model="eventForm.eventDate" mode="dateTime">
             <template #default="{ inputValue, togglePopover }">
               <button
+                label="Event Date & Time"
+                data-testid="event-date"
                 class="mt-1 block w-full rounded-md border-gray-300 shadow-sm"
                 @click.stop.prevent="togglePopover"
               >
@@ -122,6 +126,7 @@ function formatDateToTime(date: Date) {
           <label for="type" class="block text-sm font-medium text-gray-700">Event Type</label>
           <select
             id="type"
+            data-testid="event-type"
             v-model="eventForm.type"
             class="mt-1 block w-full rounded-md border-gray-300 shadow-sm"
             required

@@ -29,7 +29,7 @@ const [submitLogin, errorMessage] = useErrorMessage(async () => {
         v-model="userForm.email"
         :required="true"
         :minlength="5"
-        :maxlength="15"
+        :maxlength="25"
       />
 
       <FwbInput
@@ -41,7 +41,7 @@ const [submitLogin, errorMessage] = useErrorMessage(async () => {
         v-model="userForm.password"
         :required="true"
         :minlength="8"
-        :maxlength="16"
+        :maxlength="25"
       />
 
       <FwbAlert v-if="errorMessage" data-testid="errorMessage" type="danger">

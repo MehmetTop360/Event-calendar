@@ -45,7 +45,14 @@ async function submitSignup() {
 <template>
   <PageForm heading="Sign up for an account" formLabel="Signup" @submit="submitSignup">
     <template #default>
-      <FwbInput label="Email" type="email" v-model="userForm.email" :required="true" />
+      <FwbInput
+        label="Email"
+        type="email"
+        v-model="userForm.email"
+        :required="true"
+        :minlength="8"
+        :maxlength="25"
+      />
 
       <FwbInput
         label="Password"
@@ -55,6 +62,8 @@ async function submitSignup() {
         autocomplete="current-password"
         v-model="userForm.password"
         :required="true"
+        :minlength="8"
+        :maxlength="25"
       />
 
       <FwbAlert v-if="hasSucceeded" data-testid="successMessage" type="success">

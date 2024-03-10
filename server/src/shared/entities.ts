@@ -2,4 +2,4 @@
 // Types are stripped out by the compiler, so this is safe.
 export type * from '../entities/calendar'
 export type * from '../entities/event'
-export type * from '../entities/user';
+export type * from '../entities/user'

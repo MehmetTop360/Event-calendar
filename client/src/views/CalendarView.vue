@@ -149,6 +149,7 @@ async function deleteEvent(eventId: number) {
               borderWidth: '1px',
               borderStyle: 'solid',
             }"
+            :data-testid="`event-${event.id}`"
           >
             <div
               v-if="deleteErrorMessage"
@@ -162,8 +163,12 @@ async function deleteEvent(eventId: number) {
               @click="deleteEvent(event.id)"
               alt="Delete"
             />
-            <h3 class="text-xl">{{ event.title }}</h3>
-            <p class="text-sm text-gray-600">{{ event.description }}</p>
+            <h3 class="event-title" :data-testid="'event-title-' + event.id">{{ event.title }}</h3>
+
+            <p class="event-description" :data-testid="'event-description-' + event.id">
+              {{ event.description }}
+            </p>
+
             <p class="text-sm">Date: {{ new Date(event.eventDate).toLocaleDateString() }}</p>
             <p class="text-sm">
               Time: {{ event.startTime.split(':')[0] }}:{{ event.startTime.split(':')[1] }}
