@@ -33,7 +33,7 @@ const masks = {
 
 const eventTypeColors: Record<EventType, string> = {
   MEETUP: 'red',
-  HOUSE_PARTY: 'green',
+  'HOUSE PARTY': 'green',
   BIRTHDAY: 'blue',
   WORK: 'purple',
   OTHER: 'orange',
