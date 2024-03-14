@@ -11,7 +11,7 @@ import { Calendar } from './calendar'
 
 export enum EventType {
   MEETUP = 'MEETUP',
-  HOUSE_PARTY = 'HOUSE_PARTY',
+  HOUSE_PARTY = 'HOUSE PARTY',
   BIRTHDAY = 'BIRTHDAY',
   WORK = 'WORK',
   OTHER = 'OTHER',

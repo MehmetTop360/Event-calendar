@@ -24,4 +24,16 @@ describe('Remove Calendar', () => {
       .findOneBy({ id: calendar.id })
     expect(deletedCalendar).toBeNull()
   })
+
+  it('should not remove a calendar that does not exist', async () => {
+    // Arrange
+    const db = await createTestDatabase()
+    const savedUser = await db.getRepository(User).save(fakeUser())
+    const { remove } = calendarRouter.createCaller(
+      authContext({ db }, savedUser)
+    )
+
+    // Act & Assert
+    await expect(remove({ id: 9999 })).rejects.toThrow('Calendar not found')
+  })
 })

@@ -132,7 +132,7 @@ function formatDateToTime(date: Date) {
             required
           >
             <option value="MEETUP">Meetup</option>
-            <option value="HOUSE_PARTY">House Party</option>
+            <option value="HOUSE PARTY">House Party</option>
             <option value="BIRTHDAY">Birthday</option>
             <option value="WORK">Work</option>
             <option value="OTHER">Other</option>
